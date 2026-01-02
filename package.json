@@ -1,0 +1,22 @@
+{
+  "name": "tictactrip-test-technique",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Yacine Kherbache",
+  "license": "AGPL-3.0",
+  "keywords": [],
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "node --watch src/main.ts",
+    "lint": "eslint --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^6.7.3",
+    "@eslint-react/eslint-plugin": "^2.3.13",
+    "eslint": "^9.39.2",
+    "eslint-plugin-format": "^1.1.0",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.26"
+  }
+}
