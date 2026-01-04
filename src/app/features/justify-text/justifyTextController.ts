@@ -17,13 +17,11 @@ export class JustifyTextController {
   public justify: MiddlewareFunction = (req, res) => {
     try {
       const text = req.body;
-      // Justifier le texte
       const justifiedText = this._justifyTextService.justify(text);
       if (isErr(justifiedText)) {
         const error = justifiedText.unwrapErr();
         return this.handleJustifyTextError(error, res);
       }
-      // Retourner le texte justifié
       return res.type('text/plain').send(justifiedText.unwrap());
     } catch (error) {
       console.error('Unexpected error in justify:', error);

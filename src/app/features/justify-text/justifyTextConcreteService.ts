@@ -29,7 +29,6 @@ export class JustifyTextConcreteService implements JustifyTextService {
     let currentLen = 0;
 
     for (const word of words) {
-      // Handle words longer than MAX_WIDTH - add them on their own line
       if (word.length > this.MAX_WIDTH) {
         if (currentLine.length > 0) {
           lines.push(currentLine);
@@ -48,7 +47,7 @@ export class JustifyTextConcreteService implements JustifyTextService {
       currentLen += word.length;
     }
     if (currentLine.length > 0) {
-      lines.push(currentLine); // Push last line only if non-empty
+      lines.push(currentLine);
     }
     return lines
       .map((line, i) => this.justifyLine(line, i === lines.length - 1))
