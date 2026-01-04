@@ -27,10 +27,6 @@ export class JustifyTextController {
       // Retourner le texte justifié
       return res.type('text/plain').send(justifiedText.unwrap());
     } catch (error) {
-      if (isKnownError(error, JUSTIFY_TEXT_ERROR)) {
-        return this.handleJustifyTextError(error, res);
-      }
-
       console.error('Unexpected error in justify:', error);
       return res.status(500).send('Erreur interne du serveur');
     }
