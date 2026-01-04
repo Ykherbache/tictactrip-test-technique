@@ -25,7 +25,7 @@ export class JustifyTextController {
         return this.handleJustifyTextError(error, res);
       }
       // Retourner le texte justifié
-      res.type('text/plain').send(justifiedText.unwrap());
+      return res.type('text/plain').send(justifiedText.unwrap());
     } catch (error) {
       if (isKnownError(error, JUSTIFY_TEXT_ERROR)) {
         return this.handleJustifyTextError(error, res);
