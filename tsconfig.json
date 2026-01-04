@@ -1,18 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "outDir": "dist",
     "target": "esnext",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "alwaysStrict": true,
-    "sourceMap": true,
-    "resolveJsonModule": true,
-    "declaration": true,
-    "noUnusedLocals": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  },
-  "include": ["src/**/*.ts", "__tests__/**/*.ts"]
+    "module": "nodenext",
+    "noEmit": true, // Optional - see note below
+    "rewriteRelativeImportExtensions": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true
+  }
 }
