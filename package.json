@@ -7,7 +7,7 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
-    "_________________developement_________________": "",
+    "_________________development_________________": "",
     "dev": "nodemon",
     "lint": "pnpm prettier && pnpm eslint",
     "lint:fix": "pnpm prettier:fix && pnpm eslint:fix",
@@ -41,6 +41,8 @@
     "@types/node": "22.10.1",
     "@typescript-eslint/eslint-plugin": "7.2.0",
     "@typescript-eslint/parser": "7.2.0",
+    "@eslint/eslintrc": "^2.1.4",
+    "@eslint/js": "^8.57.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "5.1.3",

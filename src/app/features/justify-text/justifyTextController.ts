@@ -8,7 +8,7 @@ import {
   JUSTIFY_TEXT_ERROR,
   JustifyTextError,
 } from './errors/justifyTextError';
-import { isKnownError } from '../../utils/extractKnownErrorList';
+import { isKnownError } from '../../utils/isKnownError';
 
 export class JustifyTextController {
   constructor(
@@ -18,16 +18,6 @@ export class JustifyTextController {
   public justify: MiddlewareFunction = (req, res) => {
     try {
       const text = req.body;
-      // Vérifier que le texte est bien une chaîne
-      if (typeof text !== 'string') {
-        return res
-          .status(400)
-          .send('Le corps de la requête doit être du texte brut');
-      }
-      // Vérifier que le texte n'est pas vide
-      if (!text.trim()) {
-        return res.status(400).send('Le texte ne peut pas être vide');
-      }
       // Justifier le texte
       const justifiedText = this._justifyTextService.justify(text);
       if (isErr(justifiedText)) {
