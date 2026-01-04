@@ -1,4 +1,4 @@
-import { setupJustifyTextRoutes } from '../features/ justify-text/justifyTextRoute';
+import { setupJustifyTextRoutes } from '../features/justify-text/justifyTextRoute';
 
 import { Express } from 'express';
 export function setupRoutes(app: Express) {

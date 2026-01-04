@@ -1,3 +1,1 @@
-export const repositoryType = {
-  JustifyTextRepository: Symbol.for('JustifyTextRepository'),
-};
+export const repositoryType = {};

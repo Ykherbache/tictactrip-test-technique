@@ -21,20 +21,21 @@
     "build": "tsc",
     "build:watch": "tsc -w",
     "prepublishOnly": "pnpm clean && pnpm build",
-    "_________________implementationt_________________": "",
+    "_________________implementation_________________": "",
     "clean": "rm -rf dist coverage",
     "test": "docker-compose up --abort-on-container-exit"
   },
   "dependencies": {
+    "@gum-tech/flow-ts": "^1.3.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.2.1",
     "helmet": "^8.1.0",
     "inversify": "^7.10.8",
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
-    "@gum-tech/flow-ts": "^1.3.0",
     "@types/express": "^5.0.6",
     "@types/jest": "29.5.14",
     "@types/node": "22.10.1",

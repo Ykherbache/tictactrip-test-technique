@@ -1,5 +1,8 @@
 import { Result, Err, Ok } from '@gum-tech/flow-ts';
-import { JustifyTextError, JUSTIFY_TEXT_ERROR } from './errors/justifyTextError';
+import {
+  JustifyTextError,
+  JUSTIFY_TEXT_ERROR,
+} from './errors/justifyTextError';
 import { JustifyTextService } from './types/justifyTextService';
 
 export class JustifyTextConcreteService implements JustifyTextService {
@@ -26,6 +29,16 @@ export class JustifyTextConcreteService implements JustifyTextService {
     let currentLen = 0;
 
     for (const word of words) {
+      // Handle words longer than MAX_WIDTH - add them on their own line
+      if (word.length > this.MAX_WIDTH) {
+        if (currentLine.length > 0) {
+          lines.push(currentLine);
+          currentLine = [];
+          currentLen = 0;
+        }
+        lines.push([word]);
+        continue;
+      }
       if (currentLen + word.length + currentLine.length > this.MAX_WIDTH) {
         lines.push(currentLine);
         currentLine = [];
@@ -34,9 +47,12 @@ export class JustifyTextConcreteService implements JustifyTextService {
       currentLine.push(word);
       currentLen += word.length;
     }
-    lines.push(currentLine); // Push last line
-
-    return lines.map((line, i) => this.justifyLine(line, i === lines.length - 1)).join('\n');
+    if (currentLine.length > 0) {
+      lines.push(currentLine); // Push last line only if non-empty
+    }
+    return lines
+      .map((line, i) => this.justifyLine(line, i === lines.length - 1))
+      .join('\n');
   }
 
   private justifyLine(words: string[], isLastLine: boolean): string {
