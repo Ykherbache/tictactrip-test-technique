@@ -8,7 +8,6 @@ import {
   JUSTIFY_TEXT_ERROR,
   JustifyTextError,
 } from './errors/justifyTextError';
-import { isKnownError } from '../../utils/isKnownError';
 
 export class JustifyTextController {
   constructor(
