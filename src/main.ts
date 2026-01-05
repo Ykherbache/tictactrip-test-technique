@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Server } from 'http';
-import { config } from './config';
+import { CONFIG } from './config';
 import { createProductionApp } from './app/app';
 
 const SHUTDOWN_TIMEOUT_MS = 10000;
@@ -26,8 +26,8 @@ function shutdown(server: Server) {
 export async function startServer() {
   try {
     const app = createProductionApp();
-    const server = app.listen(config.port, () => {
-      console.log(`Server is running on port ${config.port}`);
+    const server = app.listen(CONFIG.port, () => {
+      console.log(`Server is running on port ${CONFIG.port}`);
     });
 
     process.on('SIGTERM', () => shutdown(server));

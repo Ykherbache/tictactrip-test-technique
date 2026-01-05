@@ -29,29 +29,23 @@ export class AuthConcreteService implements AuthService {
   ): Promise<Result<boolean, isConnectedError>> {
     const authHeader = request.headers['authorization'];
     if (!authHeader || typeof authHeader !== 'string') {
-      return Promise.resolve(
-        Err(IS_CONNECTED_ERROR.AUTHORIZATION_HEADER_MALFORMED),
-      );
+      return Err(IS_CONNECTED_ERROR.AUTHORIZATION_HEADER_MALFORMED);
     }
 
     const [scheme, token] = authHeader.split(' ');
     if (scheme !== 'Bearer' || !token) {
-      return Promise.resolve(
-        Err(IS_CONNECTED_ERROR.AUTHORIZATION_HEADER_MALFORMED),
-      );
+      return Err(IS_CONNECTED_ERROR.AUTHORIZATION_HEADER_MALFORMED);
     }
 
     try {
       const hasToken = await this.authRepository.hasToken(token);
       if (hasToken) {
-        return Promise.resolve(Ok(true));
+        return Ok(true);
       } else {
-        return Promise.resolve(
-          Err(IS_CONNECTED_ERROR.ERROR_DECODING_JWT_TOKEN),
-        );
+        return Err(IS_CONNECTED_ERROR.ERROR_DECODING_TOKEN);
       }
     } catch (error) {
-      return Promise.resolve(Err(IS_CONNECTED_ERROR.ERROR_DECODING_JWT_TOKEN));
+      return Err(IS_CONNECTED_ERROR.ERROR_DECODING_TOKEN);
     }
   }
 }

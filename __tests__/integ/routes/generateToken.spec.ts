@@ -1,12 +1,10 @@
+import { setupRedisIntegration } from '../utils/redis-test-manager';
 import { createTestApp } from '../utils/setup-test-app';
-import TestAgent from 'supertest/lib/agent';
 
+const testApp = createTestApp();
 describe('Generate Token API Integration Tests', () => {
-  let testApp: TestAgent;
-
-  beforeAll(() => {
-    testApp = createTestApp();
-  });
+  beforeAll(async () => {});
+  setupRedisIntegration();
 
   describe('POST /api/token', () => {
     it('should successfully generate a token with valid email', async () => {
@@ -47,6 +45,7 @@ describe('Generate Token API Integration Tests', () => {
       const response = await testApp
         .post('/api/token')
         .send({ email: 'not-an-email' })
+
         .expect('Content-Type', /json/)
         .expect(400);
 

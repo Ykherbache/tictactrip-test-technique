@@ -14,7 +14,9 @@ const configInteg: Config = {
     maxWorkers: 1,
     setupFiles: ["reflect-metadata"],
     setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-    globalSetup: "<rootDir>/test/integ/global/setup.ts",
-    globalTeardown: "<rootDir>/test/integ/global/teardown.ts",
+    globalSetup: "<rootDir>/__tests__/integ/global/setup.ts",
+    globalTeardown: "<rootDir>/__tests__/integ/global/teardown.ts",
+    testMatch: ["**/__tests__/integ/routes/**/*.spec.ts"],
+
   };
   module.exports = configInteg;

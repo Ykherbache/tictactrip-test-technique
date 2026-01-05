@@ -17,8 +17,11 @@ export const isConnected: MiddlewareFunction = async (
       case IS_CONNECTED_ERROR.AUTHORIZATION_HEADER_MALFORMED:
         response.status(401).send('No authorization header');
         return;
-      case IS_CONNECTED_ERROR.ERROR_DECODING_JWT_TOKEN:
-        response.status(403).send('Invalid token');
+      case IS_CONNECTED_ERROR.ERROR_DECODING_TOKEN:
+        response.status(401).send('Invalid token');
+        return;
+      default:
+        response.status(500).send('Authentication error');
         return;
     }
   }

@@ -1,12 +1,13 @@
+import { setupRedisIntegration } from '../utils/redis-test-manager';
 import { createTestApp } from '../utils/setup-test-app';
-import TestAgent from 'supertest/lib/agent';
 
+const testApp = createTestApp();
 describe('Justify API Integration Tests', () => {
   let testToken: string;
-  let testApp: TestAgent;
+  beforeAll(async () => {});
 
-  beforeAll(async () => {
-    testApp = createTestApp();
+  setupRedisIntegration();
+  beforeEach(async () => {
     const response = await testApp
       .post('/api/token')
       .send({ email: 'justify-test@example.com' });
@@ -50,7 +51,7 @@ describe('Justify API Integration Tests', () => {
         .set('Content-Type', 'text/plain')
         .send('Some text')
         .expect('Content-Type', /html/)
-        .expect(403);
+        .expect(401);
     });
 
     it('should return 400 for empty text', async () => {
