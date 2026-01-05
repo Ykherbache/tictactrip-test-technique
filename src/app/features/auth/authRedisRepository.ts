@@ -14,10 +14,10 @@ export class AuthRedisRepository implements AuthRepository {
     await client.set(token, email);
   }
 
-  async getEmailByToken(token: string): Promise<string | undefined> {
+  async getEmailByToken(token: string): Promise<string | null> {
     const client = this.cacheApi.getClient();
     const email = await client.get(token);
-    return email;
+    return email ?? null;
   }
 
   async hasToken(token: string): Promise<boolean> {

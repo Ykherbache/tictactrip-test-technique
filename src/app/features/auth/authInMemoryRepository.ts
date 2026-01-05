@@ -2,9 +2,8 @@ import { AuthRepository } from './types/authRepository';
 
 export class AuthInMemoryRepository implements AuthRepository {
   private tokenMap: Map<string, string> = new Map();
-  async connect(): Promise<void> {}
-  async getEmailByToken(token: string): Promise<string | undefined> {
-    return this.tokenMap.get(token);
+  async getEmailByToken(token: string): Promise<string | null> {
+    return this.tokenMap.get(token) ?? null;
   }
   async saveToken(token: string, email: string): Promise<void> {
     this.tokenMap.set(token, email);
