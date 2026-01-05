@@ -1,5 +1,25 @@
 import swaggerJsdoc from 'swagger-jsdoc';
+import path from 'path';
+import fs from 'fs';
 import { CONFIG } from '../../../config';
+
+const projectRoot = path.resolve(__dirname, '..', '..', '..', '..');
+const isProduction =
+  process.env.NODE_ENV === 'production' ||
+  !fs.existsSync(path.join(projectRoot, 'src'));
+
+const apiPaths: string[] = [];
+if (isProduction) {
+  apiPaths.push(
+    path.join(projectRoot, 'dist', 'app', 'features', '**', '*.js'),
+    path.join(projectRoot, 'dist', 'app', 'routes', '**', '*.js'),
+  );
+} else {
+  apiPaths.push(
+    path.join(projectRoot, 'src', 'app', 'features', '**', '*.ts'),
+    path.join(projectRoot, 'src', 'app', 'routes', '**', '*.ts'),
+  );
+}
 
 const options: swaggerJsdoc.Options = {
   definition: {
@@ -91,12 +111,7 @@ const options: swaggerJsdoc.Options = {
       },
     ],
   },
-  apis: [
-    './src/app/features/**/*.ts',
-    './src/app/routes/**/*.ts',
-    './dist/app/features/**/*.js',
-    './dist/app/routes/**/*.js',
-  ],
+  apis: apiPaths,
 };
 
 export const swaggerSpec = swaggerJsdoc(options);
