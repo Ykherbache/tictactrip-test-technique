@@ -11,7 +11,7 @@ export const iocContainer = new Container();
 export function bindIOC() {
   setupControllerContainer(iocContainer);
   setupServiceContainer(iocContainer);
-  setupRepositoryContainer(iocContainer);
+  setupRepositoryContainer();
 
   if (isUnitTestEnvironment()) {
     setupFakeContributorsContainer(iocContainer);
