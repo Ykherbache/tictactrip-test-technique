@@ -33,7 +33,6 @@ module.exports = {
         ],
       },
       maxWorkers: 1,
-      setupFiles: ['reflect-metadata'],
     },
   ],
   setupFiles: ['reflect-metadata'],
