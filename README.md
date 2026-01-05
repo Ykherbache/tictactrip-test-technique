@@ -18,11 +18,55 @@ API REST permettant de justifier du texte à 80 caractères par ligne avec authe
 
 🌐 **Production** : https://tictactrip-test.yaci.fr
 
+## Documentation Swagger
+
+L'API est entièrement documentée avec Swagger/OpenAPI pour faciliter son utilisation par les développeurs et recruteurs.
+
+### Accès à la documentation
+
+Une fois l'application démarrée, la documentation interactive Swagger est accessible à l'adresse suivante :
+
+- **Local** : http://localhost:3000/api-docs
+- **Production** : https://tictactrip-test.yaci.fr/api-docs
+
+### Fonctionnalités
+
+La documentation Swagger permet de :
+
+- **Explorer l'API** : Visualiser tous les endpoints disponibles avec leurs descriptions
+- **Tester les endpoints** : Exécuter des requêtes directement depuis l'interface Swagger UI
+- **Comprendre les schémas** : Consulter les modèles de données (requêtes/réponses)
+- **Authentification** : Tester facilement avec le système de tokens Bearer intégré
+
+### Utilisation
+
+1. **Accéder à Swagger UI** : Ouvrir http://localhost:3000/api-docs dans votre navigateur
+2. **Générer un token** : Utiliser l'endpoint `/api/token` pour obtenir un token d'authentification
+3. **Authentifier** : Cliquer sur le bouton "Authorize" en haut à droite et entrer votre token avec le préfixe "Bearer " (ex: `Bearer votre-token-ici`)
+4. **Tester les endpoints** : Utiliser l'interface pour tester les endpoints avec des exemples pré-remplis
+
+### Exemple de workflow
+
+```bash
+# 1. Démarrer l'application
+pnpm dev
+
+# 2. Ouvrir Swagger UI
+# Naviguer vers http://localhost:3000/api-docs
+
+# 3. Dans Swagger UI :
+#    - Tester POST /api/token avec {"email": "test@example.com"}
+#    - Copier le token retourné
+#    - Cliquer sur "Authorize" et entrer "Bearer {votre-token}"
+#    - Tester POST /api/justify avec du texte
+```
+
 ## Table des matières
 
 - [Description du projet](#description-du-projet)
   - [Fonctionnalités principales](#fonctionnalités-principales)
 - [URL de déploiement](#url-de-déploiement)
+- [Documentation Swagger](#documentation-swagger)
 - [Architecture technique](#architecture-technique)
   - [Stack technique](#stack-technique)
   - [Structure du projet](#structure-du-projet)
@@ -74,6 +118,7 @@ API REST permettant de justifier du texte à 80 caractères par ligne avec authe
 - **Cache/Base de données** : Redis
 - **Tests** : Jest (unitaires + intégration avec Testcontainers)
 - **Linter** : ESLint + Prettier
+- **Documentation API** : Swagger/OpenAPI (swagger-ui-express, swagger-jsdoc)
 - **Gestionnaire de paquets** : pnpm 9.x
 
 ### Structure du projet
@@ -518,6 +563,8 @@ tictactrip-test-technique/
 - **Prettier** 3.4.1 - Formateur de code
 - **Helmet** 8.1.0 - Sécurité HTTP
 - **express-rate-limit** 8.2.1 - Rate limiting
+- **swagger-ui-express** 5.0.1 - Interface Swagger UI
+- **swagger-jsdoc** 6.2.8 - Génération de documentation OpenAPI depuis JSDoc
 
 ## Auteur
 
