@@ -32,7 +32,7 @@ const options: swaggerJsdoc.Options = {
         bearerAuth: {
           type: 'http',
           scheme: 'bearer',
-          bearerFormat: 'JWT',
+          bearerFormat: 'UUID',
           description: "Token d'authentification obtenu via /api/token",
         },
       },
