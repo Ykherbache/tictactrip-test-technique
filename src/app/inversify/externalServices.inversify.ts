@@ -12,7 +12,14 @@ import { RedisCacheApi } from '../external-services/redisCacheApi';
 
 // this is created to separate services that use
 // external contributors like redis postgres rabbitmq
-// from the rest of services
+/**
+ * Registers external (production) implementations into the given IoC container.
+ *
+ * Binds CacheApi to RedisCacheApi, AuthRepository to AuthRedisRepository, and
+ * WordQuotaRepository to WordQuotaRedisRepository, all in singleton scope.
+ *
+ * @param iocContainer - The Inversify container to configure
+ */
 export function setupExternalContributorsContainer(
   iocContainer: Container,
 ): void {
@@ -29,7 +36,13 @@ export function setupExternalContributorsContainer(
     .to(WordQuotaRedisRepository)
     .inSingletonScope();
 }
-// this is a fake created to easily tests in unit tests
+/**
+ * Configure the provided IoC container with in-memory contributor implementations for tests.
+ *
+ * Binds AuthRepository to AuthInMemoryRepository and WordQuotaRepository to WordQuotaInMemoryRepository in singleton scope.
+ *
+ * @param iocContainer - The Inversify container to configure with fake contributor bindings for unit tests
+ */
 export function setupFakeContributorsContainer(iocContainer: Container): void {
   iocContainer
     .bind<AuthRepository>(TYPE.AuthRepository)

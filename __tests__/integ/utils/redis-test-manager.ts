@@ -4,6 +4,16 @@ import { CacheApi } from '../../../src/app/external-services/types/cacheApi';
 import { TYPE } from '../../../src/app/inversify/type.inversify';
 import { getAppContainer } from './setup-test-app';
 
+/**
+ * Sets up Redis-backed repositories and test lifecycle hooks for integration tests.
+ *
+ * Registers beforeAll to resolve repositories from the application container and connect the cache,
+ * afterEach to clear repository data between tests, and afterAll to disconnect the cache.
+ *
+ * @returns An object with getters:
+ *  - `getAuthRepo()` — returns the resolved `AuthRedisRepository`
+ *  - `getWordQuotaRepo()` — returns the resolved `WordQuotaRedisRepository`
+ */
 export function setupRedisIntegration() {
   let authRepository: AuthRedisRepository;
   let wordQuotaRepository: WordQuotaRedisRepository;
