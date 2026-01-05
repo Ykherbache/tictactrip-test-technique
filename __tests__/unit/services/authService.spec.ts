@@ -9,7 +9,6 @@ describe('AuthService', () => {
   let authRepository: AuthInMemoryRepository;
 
   beforeEach(() => {
-    // Inject the real In-Memory repo into the service
     authRepository = new AuthInMemoryRepository();
     authService = new AuthConcreteService(authRepository);
   });
@@ -23,7 +22,6 @@ describe('AuthService', () => {
       expect(token).toBeDefined();
       expect(typeof token).toBe('string');
 
-      // Verify the service actually persisted the token
       const savedEmail = await authRepository.getEmailByToken(token);
       expect(savedEmail).toBe(email);
     });
@@ -31,18 +29,14 @@ describe('AuthService', () => {
 
   describe('isUserConnected', () => {
     it('should return Ok(true) when a valid Bearer token is provided', async () => {
-      // 1. Arrange: Create a token in the system
       const token = await authService.authenticate('test@test.com');
 
-      // 2. Mock Express Request
       const mockRequest = {
         headers: { authorization: `Bearer ${token}` },
       } as Request;
 
-      // 3. Act
       const result = await authService.isUserConnected(mockRequest);
 
-      // 4. Assert
       expect(isOk(result)).toBe(true);
       if (isOk(result)) {
         expect(result.value).toBe(true);
@@ -81,7 +75,6 @@ describe('AuthService', () => {
       const result = await authService.isUserConnected(mockRequest);
 
       expect(isErr(result)).toBe(true);
-      // Note: Your service returns ERROR_DECODING_JWT_TOKEN when token isn't found
       expect(result.unwrapErr()).toBe(IS_CONNECTED_ERROR.ERROR_DECODING_TOKEN);
     });
   });

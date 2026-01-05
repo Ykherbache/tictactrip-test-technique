@@ -31,10 +31,14 @@ module.exports = {
       },
       maxWorkers: 1,
       setupFiles: ['reflect-metadata'],
-      setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
     },
   ],
   collectCoverage: true,
   coverageDirectory: 'coverage',
-  collectCoverageFrom: ['src/app/features/**/*.ts', '!src/**/*.d.ts'],
+  collectCoverageFrom: [
+    'src/app/features/**/*.ts',
+    'src/app/routes/**/*.ts',
+    'src/app/utils/**/*.ts',
+    '!src/**/*.d.ts',
+  ],
 };

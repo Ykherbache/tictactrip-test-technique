@@ -11,7 +11,6 @@ export async function startRedisContainer(): Promise<StartedRedisContainer> {
     .withExposedPorts(6379)
     .start();
 
-  // Set the Redis URL for the application to use
   process.env.REDIS_URL = `redis://${redisContainer.getHost()}:${redisContainer.getMappedPort(6379)}`;
 
   return redisContainer;
