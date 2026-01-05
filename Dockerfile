@@ -11,6 +11,7 @@ RUN pnpm install --frozen-lockfile
 
 COPY tsconfig.*.json ./
 COPY src ./src
+copy typings ./typings
 
 RUN pnpm run build
 
