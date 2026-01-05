@@ -4,10 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  '@inversifyjs/core': npm:inversify@^7.10.8
-  '@inversifyjs/container': npm:inversify@^7.10.8
-
 importers:
 
   .:
