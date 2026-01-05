@@ -4,4 +4,3 @@ export interface AuthRepository {
   hasToken(token: string): Promise<boolean>;
   connect(): Promise<void>;
 }
-export interface AuthApi {}

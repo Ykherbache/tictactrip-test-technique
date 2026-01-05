@@ -4,18 +4,20 @@ import { setupMiddleware } from './routes/middlewares/middleware';
 import { setupRoutes } from './routes/route';
 import { TYPE } from './inversify/type.inversify';
 import { AuthRepository } from './features/auth/types/authRepository';
-export function createProductionApp(): express.Application {
+export async function createProductionApp(): Promise<express.Application> {
   const app = express();
   bindIOC();
   setupMiddleware(app);
   setupRoutes(app);
-  initAuth();
+  await initAuth();
 
   return app;
 }
-function initAuth(): void {
+async function initAuth(): Promise<void> {
   const authRepository = iocContainer.get<AuthRepository>(TYPE.AuthRepository);
-  authRepository.connect().catch((err) => {
+  try {
+    await authRepository.connect();
+  } catch (err) {
     console.error('Error connect to auth api : ', err);
-  });
+  }
 }

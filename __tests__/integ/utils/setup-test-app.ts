@@ -18,6 +18,6 @@ export function createTestApp(): TestAgent {
   return supertest(app);
 }
 
-export function getAppContainer(): Container | null {
+export function getAppContainer(): Container {
   return iocContainer;
 }

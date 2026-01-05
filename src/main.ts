@@ -25,7 +25,7 @@ function shutdown(server: Server) {
 
 export async function startServer() {
   try {
-    const app = createProductionApp();
+    const app = await createProductionApp();
     const server = app.listen(CONFIG.port, () => {
       console.log(`Server is running on port ${CONFIG.port}`);
     });
@@ -53,4 +53,6 @@ process.on('uncaughtException', (error) => {
   process.exit(EXIT_CODE.FAILURE);
 });
 
-startServer();
+(async () => {
+  await startServer();
+})();

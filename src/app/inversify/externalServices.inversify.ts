@@ -16,7 +16,7 @@ export function setupExternalContributorsContainer(
     .to(AuthRedisRepository)
     .inSingletonScope();
 }
-// this is a fake created to to easily tests in unit tests
+// this is a fake created to easily tests in unit tests
 export function setupFakeContributorsContainer(iocContainer: Container): void {
   iocContainer
     .bind<AuthRepository>(TYPE.AuthRepository)

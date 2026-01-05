@@ -7,10 +7,11 @@ export function setupRedisIntegration() {
 
   beforeAll(async () => {
     const container = getAppContainer();
-    if (container) {
-      authRepository = container.get<AuthRedisRepository>(TYPE.AuthRepository);
-      await authRepository.connect();
+    if (!container) {
+      throw new Error('IoC container not initialized.');
     }
+    authRepository = container.get<AuthRedisRepository>(TYPE.AuthRepository);
+    await authRepository.connect();
   });
 
   afterEach(async () => {
@@ -26,6 +27,6 @@ export function setupRedisIntegration() {
   });
 
   return {
-    getAuthRepo: () => authRepository,
+    getAuthRepo: (): AuthRedisRepository => authRepository,
   };
 }

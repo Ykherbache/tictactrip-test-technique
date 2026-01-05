@@ -3,7 +3,6 @@ import { AuthRepository } from './types/authRepository';
 import { createClient, RedisClientType } from 'redis';
 
 export class AuthRedisRepository implements AuthRepository {
-  private static instance: AuthRedisRepository | null = null;
   private client: RedisClientType;
 
   constructor() {
@@ -30,13 +29,6 @@ export class AuthRedisRepository implements AuthRepository {
     return exists === 1;
   }
 
-  static setInstance(instance: AuthRedisRepository): void {
-    AuthRedisRepository.instance = instance;
-  }
-
-  static getInstance(): AuthRedisRepository | null {
-    return AuthRedisRepository.instance;
-  }
   async connect(): Promise<void> {
     if (!this.client.isOpen) {
       await this.client.connect();
