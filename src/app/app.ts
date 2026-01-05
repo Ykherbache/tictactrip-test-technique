@@ -3,21 +3,24 @@ import express from 'express';
 import { setupMiddleware } from './routes/middlewares/middleware';
 import { setupRoutes } from './routes/route';
 import { TYPE } from './inversify/type.inversify';
-import { AuthRepository } from './features/auth/types/authRepository';
+import { CacheApi } from './external-services/types/cacheApi';
+
 export async function createProductionApp(): Promise<express.Application> {
   const app = express();
   bindIOC();
   setupMiddleware(app);
   setupRoutes(app);
-  await initAuth();
+  await initCache();
 
   return app;
 }
-async function initAuth(): Promise<void> {
-  const authRepository = iocContainer.get<AuthRepository>(TYPE.AuthRepository);
+
+async function initCache(): Promise<void> {
+  const cacheApi = iocContainer.get<CacheApi>(TYPE.CacheApi);
   try {
-    await authRepository.connect();
+    await cacheApi.connect();
   } catch (err) {
-    console.error('Error connect to auth api : ', err);
+    console.error('Error connecting to cache: ', err);
+    throw new Error('app needs connection to a redis instance to work.');
   }
 }

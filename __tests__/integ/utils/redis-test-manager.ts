@@ -1,32 +1,27 @@
-import { AuthRedisRepository } from '../../../src/app/features/auth/authRedisRepository';
+import { CacheApi } from '../../../src/app/external-services/types/cacheApi';
 import { TYPE } from '../../../src/app/inversify/type.inversify';
 import { getAppContainer } from './setup-test-app';
 
 export function setupRedisIntegration() {
-  let authRepository: AuthRedisRepository;
+  let cacheApi: CacheApi;
 
   beforeAll(async () => {
     const container = getAppContainer();
     if (!container) {
       throw new Error('IoC container not initialized.');
     }
-    authRepository = container.get<AuthRedisRepository>(TYPE.AuthRepository);
-    await authRepository.connect();
+    cacheApi = container.get<CacheApi>(TYPE.CacheApi);
+
+    await cacheApi.connect();
   });
 
   afterEach(async () => {
-    if (authRepository) {
-      await authRepository.clearAll();
-    }
+    await cacheApi.clearAll();
   });
 
   afterAll(async () => {
-    if (authRepository) {
-      await authRepository.disconnect();
+    if (cacheApi) {
+      await cacheApi.disconnect();
     }
   });
-
-  return {
-    getAuthRepo: (): AuthRedisRepository => authRepository,
-  };
 }
