@@ -1,10 +1,11 @@
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { WordQuotaRepository } from './types/wordQuotaRepository';
 import { CacheApi } from '../../external-services/types/cacheApi';
 import { TYPE } from '../../inversify/type.inversify';
 
 const QUOTA_KEY_PREFIX = 'word_quota:';
 
+@injectable()
 export class WordQuotaRedisRepository implements WordQuotaRepository {
   constructor(
     @inject(TYPE.CacheApi)

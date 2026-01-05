@@ -1,8 +1,9 @@
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { AuthRepository } from './types/authRepository';
 import { CacheApi } from '../../external-services/types/cacheApi';
 import { TYPE } from '../../inversify/type.inversify';
 
+@injectable()
 export class AuthRedisRepository implements AuthRepository {
   constructor(
     @inject(TYPE.CacheApi)

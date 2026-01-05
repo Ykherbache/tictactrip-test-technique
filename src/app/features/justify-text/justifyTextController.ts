@@ -1,4 +1,4 @@
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { MiddlewareFunction } from '../../types/middlewareFunction';
 import { TYPE } from '../../inversify/type.inversify';
 import { JustifyTextService } from './types/justifyTextService';
@@ -12,6 +12,7 @@ import {
 import { extractToken } from './utils/extractToken';
 import { countWords } from './utils/countWords';
 
+@injectable()
 export class JustifyTextController {
   constructor(
     @inject(TYPE.JustifyTextService)

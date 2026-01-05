@@ -4,7 +4,9 @@ import {
   JUSTIFY_TEXT_ERROR,
 } from './errors/justifyTextError';
 import { JustifyTextService } from './types/justifyTextService';
+import { injectable } from 'inversify';
 
+@injectable()
 export class JustifyTextConcreteService implements JustifyTextService {
   private readonly MAX_WIDTH = 80;
 

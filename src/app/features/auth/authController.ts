@@ -1,9 +1,10 @@
 import { MiddlewareFunction } from '../../types/middlewareFunction';
 import { TYPE } from '../../inversify/type.inversify';
 import { AuthService } from './types/authService';
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { isValidEmail } from '../../utils/isValidEmail';
 
+@injectable()
 export class AuthController {
   constructor(
     @inject(TYPE.AuthService)

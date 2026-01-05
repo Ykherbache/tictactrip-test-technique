@@ -1,7 +1,9 @@
 import { CONFIG } from '../../config';
 import { createClient, RedisClientType } from 'redis';
 import { CacheApi } from './types/cacheApi';
+import { injectable } from 'inversify';
 
+@injectable()
 export class RedisCacheApi implements CacheApi {
   private client: RedisClientType;
 
