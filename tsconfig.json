@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "alwaysStrict": true,
     "sourceMap": true,
+    "types": ["jest", "node", "reflect-metadata"],
     "resolveJsonModule": true,
     "declaration": true,
     "noUnusedLocals": true,
@@ -15,5 +16,6 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["src/**/*.ts", "__tests__/unit/**/*.ts"]
+  "include": ["src/**/*.ts", "__tests__/unit/**/*.ts"],
+  "exclude": ["./jest.config.ts"]
 }

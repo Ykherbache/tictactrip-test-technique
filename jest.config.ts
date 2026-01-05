@@ -3,6 +3,7 @@ module.exports = {
     {
       displayName: 'unit',
       testMatch: ['<rootDir>/__tests__/unit/**/*.spec.ts'],
+      setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
       preset: 'ts-jest',
       testEnvironment: 'node',
       transform: {
@@ -17,6 +18,8 @@ module.exports = {
     {
       displayName: 'integ',
       testMatch: ['<rootDir>/__tests__/integ/**/*.spec.ts'],
+
+      setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
       globalSetup: '<rootDir>/__tests__/integ/global/setup.ts',
       globalTeardown: '<rootDir>/__tests__/integ/global/teardown.ts',
       rootDir: '.',
@@ -33,6 +36,7 @@ module.exports = {
       setupFiles: ['reflect-metadata'],
     },
   ],
+  setupFiles: ['reflect-metadata'],
   collectCoverage: true,
   coverageDirectory: 'coverage',
   collectCoverageFrom: [
