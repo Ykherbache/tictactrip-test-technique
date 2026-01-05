@@ -21,5 +21,6 @@ async function initCache(): Promise<void> {
     await cacheApi.connect();
   } catch (err) {
     console.error('Error connecting to cache: ', err);
+    throw new Error('app needs connection to a redis instance to work.');
   }
 }

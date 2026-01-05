@@ -34,4 +34,13 @@ export class RedisCacheApi implements CacheApi {
   isConnected(): boolean {
     return this.client.isOpen;
   }
+  async clearAll(): Promise<void> {
+    const client = this.getClient();
+    if (client.isOpen) {
+      const keys = await client.keys('*');
+      if (keys.length > 0) {
+        await client.del(keys);
+      }
+    }
+  }
 }

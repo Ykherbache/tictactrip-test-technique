@@ -17,7 +17,7 @@ export class AuthRedisRepository implements AuthRepository {
   async getEmailByToken(token: string): Promise<string | undefined> {
     const client = this.cacheApi.getClient();
     const email = await client.get(token);
-    return email || null;
+    return email;
   }
 
   async hasToken(token: string): Promise<boolean> {
@@ -26,18 +26,10 @@ export class AuthRedisRepository implements AuthRepository {
     return exists === 1;
   }
 
-  async connect(): Promise<void> {
-    await this.cacheApi.connect();
-  }
-
   async clearAll(): Promise<void> {
     const client = this.cacheApi.getClient();
     if (client.isOpen) {
       await client.flushAll();
     }
-  }
-
-  async disconnect(): Promise<void> {
-    await this.cacheApi.disconnect();
   }
 }

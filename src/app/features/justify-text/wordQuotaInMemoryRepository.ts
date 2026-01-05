@@ -13,10 +13,4 @@ export class WordQuotaInMemoryRepository implements WordQuotaRepository {
     this.quotaMap.set(token, newCount);
     return newCount;
   }
-
-  async connect(): Promise<void> {}
-
-  async disconnect(): Promise<void> {}
-
-  async clearAll(): Promise<void> {}
 }

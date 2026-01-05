@@ -20,21 +20,18 @@ export class WordQuotaConcreteService implements WordQuotaService {
     token: string,
     wordCount: number,
   ): Promise<Result<number, JustifyTextError>> {
-    const currentCount = await this.wordQuotaRepository.getWordCount(token);
-    const newCount = currentCount + wordCount;
-
+    const newCount = await this.wordQuotaRepository.incrementWordCount(
+      token,
+      wordCount,
+    );
     if (newCount > DAILY_QUOTA) {
-      const remaining = Math.max(0, DAILY_QUOTA - currentCount);
+      await this.wordQuotaRepository.incrementWordCount(token, -wordCount);
+      const remaining = Math.max(0, DAILY_QUOTA - (newCount - wordCount));
       return Err({
         type: JUSTIFY_TEXT_ERROR.QUOTA_EXCEEDED,
         remaining,
       });
     }
-
-    const finalCount = await this.wordQuotaRepository.incrementWordCount(
-      token,
-      wordCount,
-    );
-    return Ok(finalCount);
+    return Ok(newCount);
   }
 }

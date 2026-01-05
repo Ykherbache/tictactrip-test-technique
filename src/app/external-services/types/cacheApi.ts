@@ -5,4 +5,5 @@ export interface CacheApi {
   connect(): Promise<void>;
   disconnect(): Promise<void>;
   isConnected(): boolean;
+  clearAll(): Promise<void>;
 }
