@@ -7,8 +7,9 @@ import {
   JustifyTextError,
   JUSTIFY_TEXT_ERROR,
 } from './errors/justifyTextError';
+import { CONFIG } from '../../../config';
 
-const DAILY_QUOTA = 80000;
+const DAILY_QUOTA = CONFIG.wordQuota;
 
 export class WordQuotaConcreteService implements WordQuotaService {
   constructor(
