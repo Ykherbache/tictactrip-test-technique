@@ -1,0 +1,62 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+coverage
+*.tsbuildinfo
+
+# Test files
+__tests__
+*.spec.ts
+*.test.ts
+jest.config.ts
+jest.integ.config.ts
+tsconfig.test.json
+
+# Development files
+.env
+.env.*
+!.env.example
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Documentation
+README.md
+CODE_OF_CONDUCT.md
+LICENSE
+*.md
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yaml
+
+# CI/CD
+.github
+.gitlab-ci.yml
+
+# Logs
+*.log
+logs
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.editorconfig
+.prettierrc*
+.eslintrc*
+
+# Misc
+*.tgz
+*.tar.gz
+
