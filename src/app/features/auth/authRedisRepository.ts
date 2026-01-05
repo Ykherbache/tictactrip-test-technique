@@ -1,48 +1,43 @@
-import { CONFIG } from '../../../config';
+import { inject } from 'inversify';
 import { AuthRepository } from './types/authRepository';
-import { createClient, RedisClientType } from 'redis';
+import { CacheApi } from '../../external-services/types/cacheApi';
+import { TYPE } from '../../inversify/type.inversify';
 
 export class AuthRedisRepository implements AuthRepository {
-  private client: RedisClientType;
-
-  constructor() {
-    this.client = createClient({
-      url: CONFIG.redisUrl,
-    });
-
-    this.client.on('error', (err) => {
-      console.error('Redis Client Error:', err);
-    });
-  }
+  constructor(
+    @inject(TYPE.CacheApi)
+    private readonly cacheApi: CacheApi,
+  ) {}
 
   async saveToken(token: string, email: string): Promise<void> {
-    await this.client.set(token, email);
+    const client = this.cacheApi.getClient();
+    await client.set(token, email);
   }
 
-  async getEmailByToken(token: string): Promise<string | null> {
-    const email = await this.client.get(token);
+  async getEmailByToken(token: string): Promise<string | undefined> {
+    const client = this.cacheApi.getClient();
+    const email = await client.get(token);
     return email || null;
   }
 
   async hasToken(token: string): Promise<boolean> {
-    const exists = await this.client.exists(token);
+    const client = this.cacheApi.getClient();
+    const exists = await client.exists(token);
     return exists === 1;
   }
 
   async connect(): Promise<void> {
-    if (!this.client.isOpen) {
-      await this.client.connect();
-    }
+    await this.cacheApi.connect();
   }
+
   async clearAll(): Promise<void> {
-    if (this.client.isOpen) {
-      await this.client.flushAll();
+    const client = this.cacheApi.getClient();
+    if (client.isOpen) {
+      await client.flushAll();
     }
   }
 
   async disconnect(): Promise<void> {
-    if (this.client.isOpen) {
-      await this.client.quit();
-    }
+    await this.cacheApi.disconnect();
   }
 }

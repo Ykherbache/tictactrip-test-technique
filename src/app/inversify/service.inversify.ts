@@ -4,6 +4,8 @@ import { TYPE } from './type.inversify';
 import { JustifyTextConcreteService } from '../features/justify-text/justifyTextConcreteService';
 import { AuthService } from '../features/auth/types/authService';
 import { AuthConcreteService } from '../features/auth/authConcreteService';
+import { WordQuotaService } from '../features/justify-text/types/wordQuotaService';
+import { WordQuotaConcreteService } from '../features/justify-text/wordQuotaConcreteService';
 
 export function setupServiceContainer(iocContainer: Container) {
   iocContainer
@@ -13,5 +15,9 @@ export function setupServiceContainer(iocContainer: Container) {
   iocContainer
     .bind<AuthService>(TYPE.AuthService)
     .to(AuthConcreteService)
+    .inSingletonScope();
+  iocContainer
+    .bind<WordQuotaService>(TYPE.WordQuotaService)
+    .to(WordQuotaConcreteService)
     .inSingletonScope();
 }
