@@ -1,5 +1,7 @@
+import { injectable } from 'inversify';
 import { WordQuotaRepository } from './types/wordQuotaRepository';
 
+@injectable()
 export class WordQuotaInMemoryRepository implements WordQuotaRepository {
   private quotaMap: Map<string, number> = new Map();
 

@@ -1,6 +1,6 @@
 import { Err, Ok, Result } from '@gum-tech/flow-ts';
 import { Request } from 'express';
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { AuthService } from './types/authService';
 import { AuthRepository } from './types/authRepository';
 import {
@@ -10,6 +10,7 @@ import {
 import { TYPE } from '../../inversify/type.inversify';
 import { v4 as uuidv4 } from 'uuid';
 
+@injectable()
 export class AuthConcreteService implements AuthService {
   constructor(
     @inject(TYPE.AuthRepository)

@@ -1,4 +1,4 @@
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { Err, Ok, Result } from '@gum-tech/flow-ts';
 import { WordQuotaService } from './types/wordQuotaService';
 import { WordQuotaRepository } from './types/wordQuotaRepository';
@@ -11,6 +11,7 @@ import { CONFIG } from '../../../config';
 
 const DAILY_QUOTA = CONFIG.wordQuota;
 
+@injectable()
 export class WordQuotaConcreteService implements WordQuotaService {
   constructor(
     @inject(TYPE.WordQuotaRepository)

@@ -1,8 +1,9 @@
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { AuthRepository } from './types/authRepository';
 import { CacheApi } from '../../external-services/types/cacheApi';
 import { TYPE } from '../../inversify/type.inversify';
 
+@injectable()
 export class AuthRedisRepository implements AuthRepository {
   constructor(
     @inject(TYPE.CacheApi)
@@ -14,10 +15,10 @@ export class AuthRedisRepository implements AuthRepository {
     await client.set(token, email);
   }
 
-  async getEmailByToken(token: string): Promise<string | undefined> {
+  async getEmailByToken(token: string): Promise<string | null> {
     const client = this.cacheApi.getClient();
     const email = await client.get(token);
-    return email;
+    return email ?? null;
   }
 
   async hasToken(token: string): Promise<boolean> {
