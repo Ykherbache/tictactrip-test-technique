@@ -43,5 +43,7 @@ module.exports = {
     'src/app/routes/**/*.ts',
     'src/app/utils/**/*.ts',
     '!src/**/*.d.ts',
+    '!src/app/routes/swagger/**/*.ts',
+
   ],
 };
