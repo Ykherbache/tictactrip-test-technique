@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  app:
+    image: node:20
+    working_dir: /usr/src/app
+    volumes:
+      - ./:/usr/src/app
+    command: sh -c "corepack enable &&\
+      corepack prepare pnpm@latest --activate &&\
+      pnpm install && pnpm run dev"
+    environment:
+      - PORT=3000
+      - AUTH_REPOSITORY_TYPE=in-memory
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/tictactrip
+    ports:
+      - '3000:3000'
+    depends_on:
+      - redis
+      - postgres
+
+  redis:
+    image: redis:7
+    restart: always
+    ports:
+      - '6379:6379'
+
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: tictactrip
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

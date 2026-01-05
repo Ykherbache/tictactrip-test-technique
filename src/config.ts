@@ -1,7 +1,8 @@
 import { config as loadEnv } from 'dotenv';
 loadEnv();
-export const config = {
+export const CONFIG = {
   port: getPort(),
+  redisUrl: process.env.REDIS_URL || 'redis://localhost:6379',
 };
 
 function getPort(): number {
