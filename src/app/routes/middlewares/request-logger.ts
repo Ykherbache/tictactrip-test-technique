@@ -12,7 +12,6 @@ export async function requestLogger(
 ): Promise<void> {
   const startTime = Date.now();
 
-  // Get user identifier (email or guest)
   let userIdentifier = 'guest';
   const token = extractToken(request);
   if (token) {
@@ -25,12 +24,10 @@ export async function requestLogger(
         userIdentifier = email;
       }
     } catch (error) {
-      // If there's an error getting the email, keep it as guest
       logger.warn('Error retrieving email from token', { error });
     }
   }
 
-  // Override response.end to log when response is finished
   const originalEnd = response.end.bind(response);
   response.end = function (
     chunk?: unknown,
@@ -38,11 +35,15 @@ export async function requestLogger(
     cb?: () => void,
   ): Response {
     const duration = Date.now() - startTime;
-    logger.info(
-      `${response.statusCode} ${request.method} ${duration}ms ${userIdentifier} ${request.url}`,
-    );
+    const logMessage = `${response.statusCode} ${request.method} ${duration}ms ${userIdentifier} ${request.url}`;
 
-    // Call original end with proper argument handling
+    if (response.statusCode >= 500) {
+      logger.error(logMessage);
+    } else if (response.statusCode >= 400) {
+      logger.warn(logMessage);
+    } else {
+      logger.info(logMessage);
+    }
     if (typeof encodingOrCb === 'function') {
       return originalEnd(chunk, encodingOrCb);
     } else {
