@@ -33,7 +33,7 @@ export async function requestLogger(
   // Override response.end to log when response is finished
   const originalEnd = response.end.bind(response);
   response.end = function (
-    chunk?: any,
+    chunk?: unknown,
     encodingOrCb?: BufferEncoding | (() => void),
     cb?: () => void,
   ): Response {
