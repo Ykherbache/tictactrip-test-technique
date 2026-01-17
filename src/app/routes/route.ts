@@ -10,9 +10,6 @@ export function setupRoutes(app: Express) {
   app.use(baseRoutePath, justifyTextRouter);
   app.use(baseRoutePath, authRouter);
 
-  app.get('/debug-sentry', () => {
-    throw new Error('My first Sentry error!');
-  });
   if (process.env.NODE_ENV !== 'production') {
     app.get('/debug-sentry', () => {
       throw new Error('My first Sentry error!');
