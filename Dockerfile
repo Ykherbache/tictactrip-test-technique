@@ -25,10 +25,9 @@ RUN pnpm add @opentelemetry/api @opentelemetry/auto-instrumentations-node @opent
 
 # Copy built application
 COPY --from=builder /app/dist ./dist
-
+COPY ./opentelemetry-preload.js ./
 # Set OpenTelemetry environment variables (will be overridden by Coolify)
-ENV NODE_OPTIONS="--require @opentelemetry/auto-instrumentations-node/register"
-
+ENV NODE_OPTIONS="--require ./opentelemetry-preload.js"
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001 && \
