@@ -11,9 +11,6 @@ importers:
       '@gum-tech/flow-ts':
         specifier: ^1.3.0
         version: 1.3.0
-      '@sentry/cli':
-        specifier: ^2
-        version: 2.58.4
       '@sentry/node':
         specifier: ^10.34.0
         version: 10.34.0
@@ -69,6 +66,9 @@ importers:
       '@eslint/js':
         specifier: ^8.57.0
         version: 8.57.1
+      '@sentry/cli':
+        specifier: ^2
+        version: 2.58.4
       '@testcontainers/redis':
         specifier: ^11.11.0
         version: 11.11.0
