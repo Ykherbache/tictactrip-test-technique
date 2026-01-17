@@ -20,7 +20,6 @@ export function setupRoutes(app: Express) {
   }
   //need to call the sentry express handler after all routes
   Sentry.setupExpressErrorHandler(app);
-  // @ts-ignore
   app.use(function onError(
     err: Error,
     _req: Request,
