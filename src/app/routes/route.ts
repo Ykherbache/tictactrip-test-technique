@@ -27,7 +27,7 @@ export function setupRoutes(app: Express) {
     res: Response,
     _next: NextFunction,
   ) {
-    // @ts-ignore
+    // @ts-expect-error todo update typings of express so it knows sentry updates it
     res.status(500).send(res.sentry || err.message);
   });
 }
