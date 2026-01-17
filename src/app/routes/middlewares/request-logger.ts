@@ -44,10 +44,16 @@ export async function requestLogger(
     } else {
       logger.info(logMessage);
     }
-    if (typeof encodingOrCb === 'function') {
-      return originalEnd(chunk, encodingOrCb);
-    } else {
-      return originalEnd(chunk, encodingOrCb, cb);
+
+    switch (typeof encodingOrCb) {
+      case 'function':
+        return originalEnd(chunk, encodingOrCb);
+      case 'string':
+        return originalEnd(chunk, encodingOrCb as BufferEncoding, cb);
+      case 'undefined':
+        return originalEnd(chunk);
+      default:
+        return originalEnd(chunk, encodingOrCb, cb);
     }
   };
 
