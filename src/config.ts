@@ -7,6 +7,7 @@ export const CONFIG = {
   logLevel: process.env.LOG_LEVEL || 'debug',
   sentry: {
     dsn: process.env.SENTRY_DSN,
+    pii: process.env.SENTRY_PII === 'true',
   },
 };
 

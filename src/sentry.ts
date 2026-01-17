@@ -6,7 +6,7 @@ import { logger } from './app/utils/logger';
 if (CONFIG.sentry.dsn) {
   Sentry.init({
     dsn: CONFIG.sentry.dsn,
-    sendDefaultPii: true,
+    sendDefaultPii: CONFIG.sentry.pii,
     integrations: [nodeProfilingIntegration()],
     tracesSampleRate: 1.0,
     profilesSampleRate: 1.0,
