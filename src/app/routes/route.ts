@@ -2,7 +2,7 @@ import { setupAuthRouter } from '../features/auth/authRoute';
 import { setupJustifyTextRoutes } from '../features/justify-text/justifyTextRoute';
 import * as Sentry from '@sentry/node';
 
-import { Express } from 'express';
+import { Express, NextFunction, Request } from 'express';
 export function setupRoutes(app: Express) {
   const baseRoutePath = '/api/';
   const justifyTextRouter = setupJustifyTextRoutes();
@@ -16,7 +16,8 @@ export function setupRoutes(app: Express) {
 
   //need to call the sentry express handler after all routes
   Sentry.setupExpressErrorHandler(app);
-  app.use(function onError(err: Error, _: any, res: any, __: any) {
+  // @ts-ignore
+  app.use(function onError(err: Error, _: Request, res: any, __: NextFunction) {
     res.statusCode = 500;
     res.end(res.sentry || err.message + '\n');
   });

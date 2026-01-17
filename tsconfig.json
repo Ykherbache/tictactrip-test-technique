@@ -16,7 +16,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "inlineSources": true,
-    "sourceRoot": "/"
+    "sourceRoot": "/",
   },
   "include": ["src/**/*.ts", "__tests__/unit/**/*.ts"],
   "exclude": ["./jest.config.ts"]

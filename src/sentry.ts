@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/node';
 import { CONFIG } from './config';
 import { nodeProfilingIntegration } from '@sentry/profiling-node';
+import { logger } from './app/utils/logger';
 
 if (CONFIG.sentry.dsn) {
   Sentry.init({
@@ -13,5 +14,5 @@ if (CONFIG.sentry.dsn) {
     environment: process.env.NODE_ENV || 'development',
   });
 } else {
-  console.warn('Sentry DSN not configured. Sentry error tracking is disabled.');
+  logger.warn('Sentry DSN not configured. Sentry error tracking is disabled.');
 }
