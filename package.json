@@ -23,7 +23,7 @@
     "coverage:all": "jest --coverage --runInBand",
     "_________________production_________________": "",
     "build:clean": "pnpm clean && pnpm build",
-    "build": "tsc --project tsconfig.build.json && pnpm sentry:sourcemaps",
+    "build": "tsc --project tsconfig.build.json",
     "prepublishOnly": "pnpm clean && pnpm build",
     "_________________implementation_________________": "",
     "clean": "rm -rf dist coverage",
