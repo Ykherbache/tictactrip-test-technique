@@ -142,5 +142,53 @@ describe('Justify API Integration Tests', () => {
 
       expect(response.text).toContain('Quota restant: 0 mots');
     });
+
+    it('should preserve quota when token is regenerated', async () => {
+      const email = 'quota-preserve-test@example.com';
+
+      const firstTokenResponse = await testApp
+        .post('/api/token')
+        .send({ email });
+      const firstToken = firstTokenResponse.body.token;
+
+      const words = Array(50000).fill('word').join(' ');
+      await testApp
+        .post('/api/justify')
+        .set('Authorization', `Bearer ${firstToken}`)
+        .set('Content-Type', 'text/plain')
+        .send(words)
+        .expect(200);
+
+      const secondTokenResponse = await testApp
+        .post('/api/token')
+        .send({ email });
+      const secondToken = secondTokenResponse.body.token;
+      expect(secondToken).not.toBe(firstToken);
+
+      await testApp
+        .post('/api/justify')
+        .set('Authorization', `Bearer ${firstToken}`)
+        .set('Content-Type', 'text/plain')
+        .send('test')
+        .expect(401);
+
+      const moreWords = Array(30000).fill('word').join(' ');
+      await testApp
+        .post('/api/justify')
+        .set('Authorization', `Bearer ${secondToken}`)
+        .set('Content-Type', 'text/plain')
+        .send(moreWords)
+        .expect(200);
+
+      const response = await testApp
+        .post('/api/justify')
+        .set('Authorization', `Bearer ${secondToken}`)
+        .set('Content-Type', 'text/plain')
+        .send('one more word')
+        .expect(402);
+
+      expect(response.text).toContain('Quota dépassé');
+      expect(response.text).toContain('Quota restant: 0 mots');
+    });
   });
 });

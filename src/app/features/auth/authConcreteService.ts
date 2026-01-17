@@ -18,8 +18,13 @@ export class AuthConcreteService implements AuthService {
   ) {}
 
   async authenticate(email: string): Promise<string> {
-    const token = uuidv4();
+    const existingToken = await this.authRepository.getTokenByEmail(email);
 
+    if (existingToken) {
+      await this.authRepository.deleteToken(existingToken);
+    }
+
+    const token = uuidv4();
     await this.authRepository.saveToken(token, email);
 
     return token;

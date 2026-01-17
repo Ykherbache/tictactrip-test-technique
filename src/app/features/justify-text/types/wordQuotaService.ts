@@ -3,7 +3,7 @@ import { JustifyTextError } from '../errors/justifyTextError';
 
 export interface WordQuotaService {
   checkAndIncrementQuota(
-    token: string,
+    email: string,
     wordCount: number,
   ): Promise<Result<number, JustifyTextError>>;
 }

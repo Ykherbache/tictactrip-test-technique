@@ -25,6 +25,29 @@ describe('AuthService', () => {
       const savedEmail = await authRepository.getEmailByToken(token);
       expect(savedEmail).toBe(email);
     });
+
+    it('should replace existing token when authenticating with same email', async () => {
+      const email = 'user@example.com';
+
+      const firstToken = await authService.authenticate(email);
+      const secondToken = await authService.authenticate(email);
+
+      expect(firstToken).toBeDefined();
+      expect(secondToken).toBeDefined();
+      expect(firstToken).not.toBe(secondToken);
+
+      const hasFirstToken = await authRepository.hasToken(firstToken);
+      expect(hasFirstToken).toBe(false);
+
+      const hasSecondToken = await authRepository.hasToken(secondToken);
+      expect(hasSecondToken).toBe(true);
+
+      const savedEmail = await authRepository.getEmailByToken(secondToken);
+      expect(savedEmail).toBe(email);
+
+      const tokenByEmail = await authRepository.getTokenByEmail(email);
+      expect(tokenByEmail).toBe(secondToken);
+    });
   });
 
   describe('isUserConnected', () => {

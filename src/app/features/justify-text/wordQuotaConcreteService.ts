@@ -19,15 +19,15 @@ export class WordQuotaConcreteService implements WordQuotaService {
   ) {}
 
   async checkAndIncrementQuota(
-    token: string,
+    email: string,
     wordCount: number,
   ): Promise<Result<number, JustifyTextError>> {
     const newCount = await this.wordQuotaRepository.incrementWordCount(
-      token,
+      email,
       wordCount,
     );
     if (newCount > DAILY_QUOTA) {
-      await this.wordQuotaRepository.incrementWordCount(token, -wordCount);
+      await this.wordQuotaRepository.incrementWordCount(email, -wordCount);
       const remaining = Math.max(0, DAILY_QUOTA - (newCount - wordCount));
       return Err({
         type: JUSTIFY_TEXT_ERROR.QUOTA_EXCEEDED,

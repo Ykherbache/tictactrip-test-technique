@@ -1,4 +1,4 @@
 export interface WordQuotaRepository {
-  getWordCount(token: string): Promise<number>;
-  incrementWordCount(token: string, wordCount: number): Promise<number>;
+  getWordCount(email: string): Promise<number>;
+  incrementWordCount(email: string, wordCount: number): Promise<number>;
 }
