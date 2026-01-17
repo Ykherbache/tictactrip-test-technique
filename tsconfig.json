@@ -14,7 +14,9 @@
     "noUnusedLocals": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "inlineSources": true,
+    "sourceRoot": "/"
   },
   "include": ["src/**/*.ts", "__tests__/unit/**/*.ts"],
   "exclude": ["./jest.config.ts"]

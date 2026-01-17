@@ -5,6 +5,9 @@ export const CONFIG = {
   redisUrl: process.env.REDIS_URL || 'redis://localhost:6379',
   wordQuota: parseInt(process.env.DAILY_WORD_QUOTA ?? '80000', 10) || 80000,
   logLevel: process.env.LOG_LEVEL || 'debug',
+  sentry: {
+    dsn: process.env.SENTRY_DSN,
+  },
 };
 
 function getPort(): number {
