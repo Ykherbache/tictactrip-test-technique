@@ -3,6 +3,7 @@ import { MiddlewareFunction } from '../../types/middlewareFunction';
 import { TYPE } from '../../inversify/type.inversify';
 import { JustifyTextService } from './types/justifyTextService';
 import { WordQuotaService } from './types/wordQuotaService';
+import { AuthRepository } from '../auth/types/authRepository';
 import { isErr } from '@gum-tech/flow-ts';
 import { Response } from 'express';
 import {
@@ -19,6 +20,8 @@ export class JustifyTextController {
     private readonly _justifyTextService: JustifyTextService,
     @inject(TYPE.WordQuotaService)
     private readonly _wordQuotaService: WordQuotaService,
+    @inject(TYPE.AuthRepository)
+    private readonly _authRepository: AuthRepository,
   ) {}
   public justify: MiddlewareFunction = async (req, res) => {
     try {
@@ -29,26 +32,20 @@ export class JustifyTextController {
         return res.status(401).send('Token manquant');
       }
 
+      const email = await this._authRepository.getEmailByToken(token);
+      if (!email) {
+        return res.status(401).send('Token invalide');
+      }
+
       const wordCount = countWords(text);
       const quotaResult = await this._wordQuotaService.checkAndIncrementQuota(
-        token,
+        email,
         wordCount,
       );
 
       if (isErr(quotaResult)) {
         const error = quotaResult.unwrapErr();
-        if (
-          typeof error === 'object' &&
-          'type' in error &&
-          error.type === JUSTIFY_TEXT_ERROR.QUOTA_EXCEEDED
-        ) {
-          return res
-            .status(402)
-            .send(
-              `Quota dépassé. Quota restant: ${error.remaining} mots. Limite quotidienne: 80000 mots.`,
-            );
-        }
-        return res.status(500).send('Erreur interne du serveur');
+        return this.handleJustifyTextError(error, res);
       }
 
       const justifiedText = this._justifyTextService.justify(text);

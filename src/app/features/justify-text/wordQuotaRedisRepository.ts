@@ -12,36 +12,30 @@ export class WordQuotaRedisRepository implements WordQuotaRepository {
     private readonly cacheApi: CacheApi,
   ) {}
 
-  private getQuotaKey(token: string): string {
-    return `${QUOTA_KEY_PREFIX}${token}`;
+  private getQuotaKey(email: string): string {
+    return `${QUOTA_KEY_PREFIX}${email}`;
   }
 
   private getSecondsUntilMidnightUTC(): number {
     const now = new Date();
-    const midnightUTC = new Date(
-      Date.UTC(
-        now.getUTCFullYear(),
-        now.getUTCMonth(),
-        now.getUTCDate() + 1,
-        0,
-        0,
-        0,
-      ),
+    const tomorrow = new Date(now);
+    tomorrow.setHours(24, 0, 0, 0); // Set to midnight of next day
+    const secondsUntilMidnight = Math.floor(
+      (tomorrow.getTime() - now.getTime()) / 1000,
     );
-    const diffMs = midnightUTC.getTime() - now.getTime();
-    return Math.ceil(diffMs / 1000);
+    return Math.ceil(secondsUntilMidnight);
   }
 
-  async getWordCount(token: string): Promise<number> {
+  async getWordCount(email: string): Promise<number> {
     const client = this.cacheApi.getClient();
-    const key = this.getQuotaKey(token);
+    const key = this.getQuotaKey(email);
     const count = await client.get(key);
     return count ? parseInt(count, 10) : 0;
   }
 
-  async incrementWordCount(token: string, wordCount: number): Promise<number> {
+  async incrementWordCount(email: string, wordCount: number): Promise<number> {
     const client = this.cacheApi.getClient();
-    const key = this.getQuotaKey(token);
+    const key = this.getQuotaKey(email);
     const ttl = this.getSecondsUntilMidnightUTC();
     const newCount = await client.incrBy(key, wordCount);
     await client.expire(key, ttl);

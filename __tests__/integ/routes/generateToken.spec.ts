@@ -52,5 +52,42 @@ describe('Generate Token API Integration Tests', () => {
       expect(response.body).toHaveProperty('error');
       expect(response.body.error).toContain('Invalid email format');
     });
+
+    it('should replace existing token when regenerating for same email', async () => {
+      const email = 'regenerate-test@example.com';
+
+      const firstResponse = await testApp
+        .post('/api/token')
+        .send({ email })
+        .expect(200);
+
+      const firstToken = firstResponse.body.token;
+      expect(firstToken).toBeDefined();
+
+      const secondResponse = await testApp
+        .post('/api/token')
+        .send({ email })
+        .expect(200);
+
+      const secondToken = secondResponse.body.token;
+      expect(secondToken).toBeDefined();
+      expect(secondToken).not.toBe(firstToken);
+
+      //First token should no longer be valid
+      await testApp
+        .post('/api/justify')
+        .set('Authorization', `Bearer ${firstToken}`)
+        .set('Content-Type', 'text/plain')
+        .send('test')
+        .expect(401);
+
+      //Second token should be valid
+      await testApp
+        .post('/api/justify')
+        .set('Authorization', `Bearer ${secondToken}`)
+        .set('Content-Type', 'text/plain')
+        .send('test')
+        .expect(200);
+    });
   });
 });
