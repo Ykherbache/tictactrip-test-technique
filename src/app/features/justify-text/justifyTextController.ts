@@ -12,6 +12,7 @@ import {
 } from './errors/justifyTextError';
 import { extractToken } from './utils/extractToken';
 import { countWords } from './utils/countWords';
+import { logger } from '../../utils/logger';
 
 @injectable()
 export class JustifyTextController {
@@ -55,7 +56,7 @@ export class JustifyTextController {
       }
       return res.type('text/plain').send(justifiedText.unwrap());
     } catch (error) {
-      console.error('Unexpected error in justify:', error);
+      logger.error('Unexpected error in justify:', error);
       return res.status(500).send('Erreur interne du serveur');
     }
   };

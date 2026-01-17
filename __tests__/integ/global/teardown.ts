@@ -1,12 +1,13 @@
+import { logger } from '../../../src/app/utils/logger';
 export default async function globalTeardown(): Promise<void> {
-  console.log('Global teardown started...');
+  logger.debug('Global teardown started...');
 
   await new Promise((resolve) => setTimeout(resolve, 500));
 
-  console.log('Stopping Redis container...');
+  logger.debug('Stopping Redis container...');
 
   delete process.env.INTEGRATION_TEST;
 
-  console.log('Redis container stopped');
-  console.log('Global teardown completed');
+  logger.debug('Redis container stopped');
+  logger.debug('Global teardown completed');
 }

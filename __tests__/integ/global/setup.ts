@@ -1,15 +1,15 @@
 import { startRedisContainer } from '../utils/redis-container';
-
+import { logger } from '../../../src/app/utils/logger';
 export default async function globalSetup(): Promise<void> {
-  console.log('Starting Redis container for integration tests...');
+  logger.info('Starting Redis container for integration tests...');
 
   process.env.INTEGRATION_TEST = 'true';
 
   try {
     await startRedisContainer();
-    console.log('Redis container started successfully');
+    logger.debug('Redis container started successfully');
   } catch (error) {
-    console.error('Failed to start Redis container:', error);
+    logger.error('Failed to start Redis container:', error);
     throw error;
   }
 }

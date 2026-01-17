@@ -3,6 +3,7 @@ import { TYPE } from '../../inversify/type.inversify';
 import { AuthService } from './types/authService';
 import { inject, injectable } from 'inversify';
 import { isValidEmail } from '../../utils/isValidEmail';
+import { logger } from '../../utils/logger';
 
 @injectable()
 export class AuthController {
@@ -25,7 +26,7 @@ export class AuthController {
 
       return res.json({ token });
     } catch (err) {
-      console.error('Error generating token:', err);
+      logger.error('Error generating token:', err);
       return res.status(500).json({ error: 'Internal server error' });
     }
   };
