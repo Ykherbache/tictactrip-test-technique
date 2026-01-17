@@ -1,3 +1,4 @@
+import './sentry';
 import 'reflect-metadata';
 import { Server } from 'http';
 import { CONFIG } from './config';
