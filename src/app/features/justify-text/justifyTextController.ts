@@ -56,7 +56,7 @@ export class JustifyTextController {
       }
       return res.type('text/plain').send(justifiedText.unwrap());
     } catch (error) {
-      logger.error('Unexpected error in justify:', error);
+      logger.error('Unexpected error in justify:', { error });
       return res.status(500).send('Erreur interne du serveur');
     }
   };
