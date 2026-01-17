@@ -2,6 +2,7 @@ import { CONFIG } from '../../config';
 import { createClient, RedisClientType } from 'redis';
 import { CacheApi } from './types/cacheApi';
 import { injectable } from 'inversify';
+import { logger } from '../utils/logger';
 
 @injectable()
 export class RedisCacheApi implements CacheApi {
@@ -13,7 +14,7 @@ export class RedisCacheApi implements CacheApi {
     });
 
     this.client.on('error', (err) => {
-      console.error('Redis Client Error:', err);
+      logger.error('Redis Client Error:', err);
     });
   }
 
