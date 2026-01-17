@@ -15,6 +15,11 @@ export class AuthInMemoryRepository implements AuthRepository {
   }
 
   async saveToken(token: string, email: string): Promise<void> {
+    const previousToken = this.emailMap.get(email);
+    if (previousToken) {
+      this.tokenMap.delete(previousToken);
+    }
+
     this.tokenMap.set(token, email);
     this.emailMap.set(email, token);
   }

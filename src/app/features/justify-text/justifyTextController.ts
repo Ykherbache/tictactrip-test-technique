@@ -45,18 +45,7 @@ export class JustifyTextController {
 
       if (isErr(quotaResult)) {
         const error = quotaResult.unwrapErr();
-        if (
-          typeof error === 'object' &&
-          'type' in error &&
-          error.type === JUSTIFY_TEXT_ERROR.QUOTA_EXCEEDED
-        ) {
-          return res
-            .status(402)
-            .send(
-              `Quota dépassé. Quota restant: ${error.remaining} mots. Limite quotidienne: 80000 mots.`,
-            );
-        }
-        return res.status(500).send('Erreur interne du serveur');
+        return this.handleJustifyTextError(error, res);
       }
 
       const justifiedText = this._justifyTextService.justify(text);

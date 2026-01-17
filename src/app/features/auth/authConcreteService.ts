@@ -9,6 +9,7 @@ import {
 } from './errors/isConnectedError';
 import { TYPE } from '../../inversify/type.inversify';
 import { v4 as uuidv4 } from 'uuid';
+import { logger } from '../../utils/logger';
 
 @injectable()
 export class AuthConcreteService implements AuthService {
@@ -21,7 +22,11 @@ export class AuthConcreteService implements AuthService {
     const existingToken = await this.authRepository.getTokenByEmail(email);
 
     if (existingToken) {
-      await this.authRepository.deleteToken(existingToken);
+      try {
+        await this.authRepository.deleteToken(existingToken);
+      } catch (error) {
+        logger.warn(`Failed to delete existing token for ${email}:`, error);
+      }
     }
 
     const token = uuidv4();
